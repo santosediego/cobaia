@@ -28,13 +28,13 @@ public class Person implements Serializable{
 	private Long id;
 
 	@Column(length = 150, nullable = false)
-	private String nome;
+	private String name;
 
 	@Column(length = 11)
 	private String cpf;
 
 	@Column(length = 15)
-	private String telefone;
+	private String phone;
 
 	@Column(length = 150)
 	private String email;
