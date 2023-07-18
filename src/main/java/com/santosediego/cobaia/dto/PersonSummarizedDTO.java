@@ -19,11 +19,4 @@ public class PersonSummarizedDTO implements Serializable {
     private String name;
     private String phone;
     private String email;
-
-    public PersonSummarizedDTO(Person entity) {
-        id = entity.getId();
-        name = entity.getName();
-        phone = entity.getPhone();
-        email = entity.getEmail();
-    }
 }

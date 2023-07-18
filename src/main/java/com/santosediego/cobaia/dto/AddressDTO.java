@@ -1,5 +1,6 @@
 package com.santosediego.cobaia.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.santosediego.cobaia.entities.Address;
 import com.santosediego.cobaia.entities.Person;
 import lombok.AllArgsConstructor;
@@ -18,14 +19,6 @@ public class AddressDTO {
     private String city;
     private String zipCode;
 
+    @JsonIgnore
     private Person person;
-
-    public AddressDTO(Address entity) {
-        id = entity.getId();
-        road = entity.getRoad();
-        number = entity.getNumber();
-        district = entity.getDistrict();
-        city = entity.getCity();
-        zipCode = entity.getZipCode();
-    }
 }

@@ -22,17 +22,4 @@ public class PersonDTO implements Serializable {
     private String email;
 
     private List<AddressDTO> addresses = new ArrayList<>();
-
-    public PersonDTO(Person entity) {
-        id = entity.getId();
-        name = entity.getName();
-        cpf = entity.getCpf();
-        phone = entity.getPhone();
-        email = entity.getEmail();
-    }
-
-    public PersonDTO(Person entity, List<Address> addresses) {
-        this(entity);
-        addresses.forEach(x -> this.addresses.add(new AddressDTO(x)));
-    }
 }

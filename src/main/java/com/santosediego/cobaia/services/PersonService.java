@@ -3,6 +3,7 @@ package com.santosediego.cobaia.services;
 import com.santosediego.cobaia.dto.PersonDTO;
 import com.santosediego.cobaia.dto.PersonSummarizedDTO;
 import com.santosediego.cobaia.entities.Person;
+import com.santosediego.cobaia.mapper.PersonMapper;
 import com.santosediego.cobaia.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,9 @@ import java.util.Optional;
 public class PersonService {
 
     @Autowired
+    private PersonMapper personMapper;
+
+    @Autowired
     private PersonRepository personRepository;
     private PersonDTO personDTO;
 
@@ -23,27 +27,20 @@ public class PersonService {
     public Page<PersonSummarizedDTO> findAllPaged(Pageable pageable) {
 
         Page<Person> list = personRepository.findAll(pageable);
-        return list.map(x -> new PersonSummarizedDTO(x));
+        return list.map(x -> personMapper.toPersonSummarizedDTO(x));
     }
 
     @Transactional(readOnly = true)
     public PersonDTO findById(Long id) {
         Optional<Person> obj = personRepository.findById(id);
         Person person = obj.orElseThrow(() -> new RuntimeException("Erro - Id não encontrado."));
-        return new PersonDTO(person, person.getAddresses());
+        return personMapper.toPersonDTO(person);
     }
 
     @Transactional
     public PersonDTO insert(PersonDTO dto) {
-        Person person = new Person();
-
-        person.setName(dto.getName());
-        person.setCpf(dto.getCpf());
-        person.setPhone(dto.getPhone());
-        person.setEmail(dto.getEmail());
-
-        person = personRepository.save(person);
-
-        return new PersonDTO(person);
+        Person test = personMapper.toPerson(dto);
+        test = personRepository.save(test);
+        return personMapper.toPersonDTO(test);
     }
 }
